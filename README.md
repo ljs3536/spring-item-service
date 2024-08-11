@@ -129,3 +129,14 @@ JSP를 생각해보면, JSP 파일은 웹 브라우저에서 그냥 열면 JSP �
 ### 주의
 @PathVariable 사용 시 스프링 부트 3.2버전 이 후 부터는 @PathVariable("itemId") long itemId 이런 방식으로 이름을 지정해 주어야 한다.
 
+# /24-08-11
+## 상품 등록 폼
+
+#### 속성 변경 - th:action
+- th:action
+- HTML form에서 action에 값이 없으면 현재 URL에 데이터를 전송한다.
+- 상품 등록 폼의 URL과 실제 상품 등록을 처리하는 URL을 똑같이 맞추고 HTTP 메서드로 두 기능을 구분한다.
+  - 상품 등록 폼 : GET /basic/items/add
+  - 상품 등록 처리 : POST /baisc/items/add
+- 이렇게 하면 하나의 URL로 등록 폼과, 등록 처리를 갈끔하게 처리할 수 있다.
+
