@@ -140,3 +140,44 @@ JSP를 생각해보면, JSP 파일은 웹 브라우저에서 그냥 열면 JSP �
   - 상품 등록 처리 : POST /baisc/items/add
 - 이렇게 하면 하나의 URL로 등록 폼과, 등록 처리를 갈끔하게 처리할 수 있다.
 
+# /24-08-14
+## 상품 등록 처리 - @ModelAttribute
+이제 상품 등록 폼에서 전달된 데이터로 실제 상품 을 등록 처리해보자
+상품 등록 폼은 다음 방식으로 서버에 데이터를 전달한다.
+
+- POST - HTML Form
+  - content-Type : application/x-www-form-urlencoded
+  - 메시지 바디에 쿼리 파라미터 형식으로 전달 itemName=itemA&price=10000&quantity=10
+  - 예) 회원가입, 상품 주문, HTML Form 사용
+요청 파라미터 형식을 처리해야 하므로 @RequestParam을 사용하자
+
+### 상품 등록 처리 - @RequestParam
+#### addItemV1 - BasicItemController에 추가
+
+### 상품 등록 처리 - @ModelAttribute
+@RequestParam으로 변수를 하나하나 받아서 Item을 생성하는 과정은 불편했따.
+이번에는 @ModelAttribute를 사용해서 한번에 처리해보자.
+
+#### addItemV2 - 상품 등록 처리 ModelAttribute
+##### @ModelAttribute - 요청 파라미터 처리
+@ModelAttribute는 Item 객체를 생성하고, 요청 파라미터의 값을 프로퍼티 접근법으로 입력해준다.
+
+##### @ModelAttribute - Model 추가
+@ModelAttribute는 중요한 한가지 기능이 더 있는데, 바로 모델(Model)에 @ModelAttribute로 지정한 객체를 자동으로 넣어준다.
+지금 코드를 보면 model.addAttribute("item", item)가 주석처리 되어 있어도 잘 동작하는 것을 확인할 수 있다.
+
+모델에 데이터를 담을 때는 이름이 필요하다.
+이름은 @ModelAttribute에 지정한 name(value) 속성을 사용한다.
+만약 다음과 같이 @ModelAttribute의 이름을 다르게 지정하면 다른 이름으로 모델에 포함된다.
+
+@ModelAttribute("hello") Item item -> 이름을 hello로 지정
+model.addAttribute("hello", item); -> 모델에 hello이름으로 저장
+
+### 주의
+실행전에 이전 버전인 addItemV1에 @PostMapping("/add")를 꼭 주석처리 해주어야 한다.
+그렇지 않으면 중복 매핑으로 오류가 발생한다.
+
+#### addItemV3 - 상품 등록 처리 ModelAttribute 이름 생략
+
+#### addItemV4 - 상품 등록 처리 ModelAttribute 전체 생략
+@ModelAttribute 자체도 생략 가능하다. 대상 객체는 모델에 자동 등록된다.
